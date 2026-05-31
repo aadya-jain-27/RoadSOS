@@ -1,0 +1,29 @@
+{
+  "_comment": "Fallback data for offline mode. Browser localStorage takes priority when populated from live API.",
+  "sample_services": {
+    "hospital": [
+      {
+        "name": "AIIMS Trauma Centre",
+        "distance_km": 2.3,
+        "lat": 28.5672,
+        "lon": 77.2100,
+        "phone": "011-26593308",
+        "type": "hospital",
+        "label": "Hospital / Trauma Centre",
+        "icon": "🏥"
+      }
+    ],
+    "police": [
+      {
+        "name": "Local Police Station",
+        "distance_km": 1.1,
+        "lat": 28.5700,
+        "lon": 77.2150,
+        "phone": "100",
+        "type": "police",
+        "label": "Police Station",
+        "icon": "🚔"
+      }
+    ]
+  }
+}

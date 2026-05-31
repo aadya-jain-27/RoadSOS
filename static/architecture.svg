@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" font-family="Inter, -apple-system, sans-serif">
+  <!-- Background -->
+  <rect width="900" height="540" fill="#0F172A" rx="16"/>
+
+  <!-- Title -->
+  <text x="450" y="38" text-anchor="middle" fill="#F8FAFC" font-size="18" font-weight="800" letter-spacing="1">RoadSoS — System Architecture</text>
+
+  <!-- ── USER LAYER ── -->
+  <rect x="30" y="60" width="840" height="80" rx="12" fill="#1E293B" stroke="#FF453A" stroke-width="1.5"/>
+  <text x="450" y="83" text-anchor="middle" fill="#FF453A" font-size="11" font-weight="700" letter-spacing="2">USER LAYER</text>
+
+  <!-- Phone box -->
+  <rect x="60" y="90" width="120" height="38" rx="8" fill="#263348"/>
+  <text x="120" y="108" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="700">Mobile Browser</text>
+  <text x="120" y="122" text-anchor="middle" fill="#94A3B8" font-size="9">HTML5 · CSS3 · JS</text>
+
+  <!-- Features -->
+  <rect x="210" y="90" width="110" height="38" rx="8" fill="#263348"/>
+  <text x="265" y="108" text-anchor="middle" fill="#F8FAFC" font-size="10" font-weight="700">SOS + Triage</text>
+  <text x="265" y="122" text-anchor="middle" fill="#94A3B8" font-size="9">Crash Detection</text>
+
+  <rect x="340" y="90" width="110" height="38" rx="8" fill="#263348"/>
+  <text x="395" y="108" text-anchor="middle" fill="#F8FAFC" font-size="10" font-weight="700">First Aid Guide</text>
+  <text x="395" y="122" text-anchor="middle" fill="#94A3B8" font-size="9">Offline Capable</text>
+
+  <rect x="470" y="90" width="110" height="38" rx="8" fill="#263348"/>
+  <text x="525" y="108" text-anchor="middle" fill="#F8FAFC" font-size="10" font-weight="700">Live Map</text>
+  <text x="525" y="122" text-anchor="middle" fill="#94A3B8" font-size="9">Leaflet + OSM</text>
+
+  <rect x="600" y="90" width="110" height="38" rx="8" fill="#263348"/>
+  <text x="655" y="108" text-anchor="middle" fill="#F8FAFC" font-size="10" font-weight="700">Doc Vault</text>
+  <text x="655" y="122" text-anchor="middle" fill="#94A3B8" font-size="9">RC · DL · Insurance</text>
+
+  <rect x="730" y="90" width="110" height="38" rx="8" fill="#263348"/>
+  <text x="785" y="108" text-anchor="middle" fill="#F8FAFC" font-size="10" font-weight="700">SSE Feed</text>
+  <text x="785" y="122" text-anchor="middle" fill="#94A3B8" font-size="9">Incident Alerts</text>
+
+  <!-- Arrow down -->
+  <line x1="450" y1="140" x2="450" y2="168" stroke="#FF453A" stroke-width="2" stroke-dasharray="4,3"/>
+  <polygon points="444,165 450,175 456,165" fill="#FF453A"/>
+
+  <!-- ── BACKEND LAYER ── -->
+  <rect x="30" y="178" width="840" height="90" rx="12" fill="#1E293B" stroke="#0A84FF" stroke-width="1.5"/>
+  <text x="450" y="198" text-anchor="middle" fill="#0A84FF" font-size="11" font-weight="700" letter-spacing="2">BACKEND LAYER — Python Flask</text>
+
+  <rect x="55" y="206" width="130" height="50" rx="8" fill="#263348"/>
+  <text x="120" y="226" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="700">/api/sos</text>
+  <text x="120" y="241" text-anchor="middle" fill="#94A3B8" font-size="9">Triage · Services</text>
+  <text x="120" y="252" text-anchor="middle" fill="#94A3B8" font-size="9">First Aid · Chat</text>
+
+  <rect x="205" y="206" width="130" height="50" rx="8" fill="#263348"/>
+  <text x="270" y="226" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="700">/api/nearby/&lt;type&gt;</text>
+  <text x="270" y="241" text-anchor="middle" fill="#94A3B8" font-size="9">GPS-native query</text>
+  <text x="270" y="252" text-anchor="middle" fill="#94A3B8" font-size="9">Expanding radius</text>
+
+  <rect x="355" y="206" width="130" height="50" rx="8" fill="#263348"/>
+  <text x="420" y="226" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="700">Cache Engine</text>
+  <text x="420" y="241" text-anchor="middle" fill="#94A3B8" font-size="9">LRU Memory (5 min)</text>
+  <text x="420" y="252" text-anchor="middle" fill="#94A3B8" font-size="9">SQLite Tile (20 min)</text>
+
+  <rect x="505" y="206" width="130" height="50" rx="8" fill="#263348"/>
+  <text x="570" y="226" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="700">Mirror Manager</text>
+  <text x="570" y="241" text-anchor="middle" fill="#94A3B8" font-size="9">3 mirrors parallel</text>
+  <text x="570" y="252" text-anchor="middle" fill="#94A3B8" font-size="9">First-win · Circuit break</text>
+
+  <rect x="655" y="206" width="130" height="50" rx="8" fill="#263348"/>
+  <text x="720" y="226" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="700">SSE Broadcaster</text>
+  <text x="720" y="241" text-anchor="middle" fill="#94A3B8" font-size="9">Incident stream</text>
+  <text x="720" y="252" text-anchor="middle" fill="#94A3B8" font-size="9">Real-time alerts</text>
+
+  <!-- Arrows down -->
+  <line x1="270" y1="268" x2="270" y2="295" stroke="#0A84FF" stroke-width="2" stroke-dasharray="4,3"/>
+  <polygon points="264,292 270,302 276,292" fill="#0A84FF"/>
+  <line x1="570" y1="268" x2="570" y2="295" stroke="#0A84FF" stroke-width="2" stroke-dasharray="4,3"/>
+  <polygon points="564,292 570,302 576,292" fill="#0A84FF"/>
+
+  <!-- ── DATA LAYER ── -->
+  <rect x="30" y="305" width="390" height="100" rx="12" fill="#1E293B" stroke="#30D158" stroke-width="1.5"/>
+  <text x="225" y="325" text-anchor="middle" fill="#30D158" font-size="11" font-weight="700" letter-spacing="2">LOCAL DATA LAYER</text>
+
+  <rect x="50" y="333" width="160" height="58" rx="8" fill="#263348"/>
+  <text x="130" y="352" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="700">SQLite Database</text>
+  <text x="130" y="367" text-anchor="middle" fill="#94A3B8" font-size="9">emergency_contacts</text>
+  <text x="130" y="379" text-anchor="middle" fill="#94A3B8" font-size="9">tile_cache · responders</text>
+
+  <rect x="230" y="333" width="170" height="58" rx="8" fill="#263348"/>
+  <text x="315" y="352" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="700">Fallback Engine</text>
+  <text x="315" y="367" text-anchor="middle" fill="#94A3B8" font-size="9">Haversine sort · No city</text>
+  <text x="315" y="379" text-anchor="middle" fill="#94A3B8" font-size="9">Works fully offline</text>
+
+  <!-- ── EXTERNAL LAYER ── -->
+  <rect x="440" y="305" width="430" height="100" rx="12" fill="#1E293B" stroke="#FF9F0A" stroke-width="1.5"/>
+  <text x="655" y="325" text-anchor="middle" fill="#FF9F0A" font-size="11" font-weight="700" letter-spacing="2">EXTERNAL APIs (Open Source · Free)</text>
+
+  <rect x="460" y="333" width="120" height="58" rx="8" fill="#263348"/>
+  <text x="520" y="352" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="700">Overpass API</text>
+  <text x="520" y="367" text-anchor="middle" fill="#FF9F0A" font-size="9">overpass-api.de</text>
+  <text x="520" y="379" text-anchor="middle" fill="#94A3B8" font-size="9">kumi · mail.ru</text>
+
+  <rect x="600" y="333" width="120" height="58" rx="8" fill="#263348"/>
+  <text x="660" y="352" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="700">Nominatim</text>
+  <text x="660" y="367" text-anchor="middle" fill="#FF9F0A" font-size="9">Reverse geocoding</text>
+  <text x="660" y="379" text-anchor="middle" fill="#94A3B8" font-size="9">Location names</text>
+
+  <rect x="740" y="333" width="110" height="58" rx="8" fill="#263348"/>
+  <text x="795" y="352" text-anchor="middle" fill="#F8FAFC" font-size="11" font-weight="700">OpenStreetMap</text>
+  <text x="795" y="367" text-anchor="middle" fill="#FF9F0A" font-size="9">Map tiles</text>
+  <text x="795" y="379" text-anchor="middle" fill="#94A3B8" font-size="9">Global · Free</text>
+
+  <!-- ── BOTTOM STATS ── -->
+  <rect x="30" y="420" width="840" height="100" rx="12" fill="#1E293B" stroke="#263348" stroke-width="1"/>
+
+  <text x="450" y="442" text-anchor="middle" fill="#64748B" font-size="10" font-weight="700" letter-spacing="2">PERFORMANCE BENCHMARKS</text>
+
+  <!-- Stat 1 -->
+  <text x="120" y="472" text-anchor="middle" fill="#FF453A" font-size="28" font-weight="900">0.1s</text>
+  <text x="120" y="490" text-anchor="middle" fill="#94A3B8" font-size="10" font-weight="600">Cached response</text>
+  <line x1="210" y1="455" x2="210" y2="505" stroke="#263348" stroke-width="1"/>
+
+  <!-- Stat 2 -->
+  <text x="300" y="472" text-anchor="middle" fill="#30D158" font-size="28" font-weight="900">1.1km</text>
+  <text x="300" y="490" text-anchor="middle" fill="#94A3B8" font-size="10" font-weight="600">Nearest hospital found</text>
+  <line x1="390" y1="455" x2="390" y2="505" stroke="#263348" stroke-width="1"/>
+
+  <!-- Stat 3 -->
+  <text x="490" y="472" text-anchor="middle" fill="#0A84FF" font-size="28" font-weight="900">150+</text>
+  <text x="490" y="490" text-anchor="middle" fill="#94A3B8" font-size="10" font-weight="600">Countries supported</text>
+  <line x1="580" y1="455" x2="580" y2="505" stroke="#263348" stroke-width="1"/>
+
+  <!-- Stat 4 -->
+  <text x="680" y="472" text-anchor="middle" fill="#FF9F0A" font-size="28" font-weight="900">0</text>
+  <text x="680" y="490" text-anchor="middle" fill="#94A3B8" font-size="10" font-weight="600">Paid APIs / keys needed</text>
+  <line x1="770" y1="455" x2="770" y2="505" stroke="#263348" stroke-width="1"/>
+
+  <!-- Stat 5 -->
+  <text x="835" y="472" text-anchor="middle" fill="#BF5AF2" font-size="28" font-weight="900">8+</text>
+  <text x="835" y="490" text-anchor="middle" fill="#94A3B8" font-size="10" font-weight="600">Service types</text>
+
+  <!-- Bottom note -->
+  <text x="450" y="514" text-anchor="middle" fill="#475569" font-size="9">Hospitals · Ambulance · Police · Fire · Mechanic · Towing · Pharmacy · Blood Bank — all from OpenStreetMap</text>
+</svg>

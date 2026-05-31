@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0F172A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>RoadSoS — Emergency Assistance</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ═══════════════════════════════════════════
+       FLOATING ELEMENTS (above all views)
+  ═══════════════════════════════════════════ -->
+
+  <!-- Golden Hour Timer -->
+  <div class="golden-bar" id="goldenBar" style="display:none">
+    <div class="golden-inner">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span class="golden-label">Golden Hour</span>
+      <span class="golden-val" id="timerValue">60:00</span>
+      <button class="golden-safe-btn" onclick="imSafe()">I'm Safe</button>
+      <button class="golden-stop" onclick="stopTimer()">✕</button>
+    </div>
+  </div>
+
+  <!-- Incident Alert Banner -->
+  <div class="incident-banner" id="incidentBanner" style="display:none">
+    <div class="incident-inner">
+      <div class="incident-dot"></div>
+      <div class="incident-text">
+        <strong id="incidentTitle"></strong>
+        <span id="incidentSub"></span>
+      </div>
+      <button onclick="closeIncidentAlert()">✕</button>
+    </div>
+  </div>
+
+  <!-- Offline Banner -->
+  <div class="offline-banner" id="offlineBanner" style="display:none">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55M5 12.55a10.94 10.94 0 0 1 5.17-2.39M10.71 5.05A16 16 0 0 1 22.56 9M1.42 9a15.91 15.91 0 0 1 4.7-2.88M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg>
+    Offline — call 112 immediately
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       VIEW: HOME
+  ═══════════════════════════════════════════ -->
+  <div class="view" id="v-home">
+
+    <!-- Top Bar -->
+    <header class="home-header">
+      <div class="brand">
+        <div class="brand-dot"></div>
+        <span class="brand-name">RoadSoS</span>
+      </div>
+      <button class="loc-btn" id="locBtn" onclick="requestLocation()">
+        <span class="loc-indicator" id="locIndicator"></span>
+        <span class="loc-text" id="locText">Share Location</span>
+      </button>
+    </header>
+
+    <!-- SOS Hero -->
+    <div class="sos-hero">
+      <div class="sos-wrap">
+        <button class="sos-btn" id="sosBtn" onclick="initSOS()">
+          <div class="sos-ring r1"></div>
+          <div class="sos-ring r2"></div>
+          <div class="sos-ring r3"></div>
+          <div class="sos-core">
+            <span class="sos-word">SOS</span>
+            <span class="sos-sub">EMERGENCY</span>
+          </div>
+        </button>
+      </div>
+      <p class="sos-caption">Tap for immediate emergency help</p>
+    </div>
+
+    <!-- Live Stats Bar -->
+    <div class="stats-bar" id="statsBar" style="display:none">
+      <div class="stat-chip" id="statHospital">
+        <span class="stat-num" id="statHospitalNum">—</span>
+        <span class="stat-lbl">hospitals</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-chip" id="statPolice">
+        <span class="stat-num" id="statPoliceNum">—</span>
+        <span class="stat-lbl">police</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-chip" id="statBlood">
+        <span class="stat-num" id="statBloodNum">—</span>
+        <span class="stat-lbl">blood banks</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-chip" id="statMechanic">
+        <span class="stat-num" id="statMechanicNum">—</span>
+        <span class="stat-lbl">mechanics</span>
+      </div>
+    </div>
+
+    <!-- Primary Actions -->
+    <div class="primary-actions">
+      <button class="action-card" onclick="startFlow('accident')">
+        <div class="action-icon-wrap orange">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <span class="action-label">Report<br>Accident</span>
+      </button>
+      <button class="action-card" onclick="startFlow('breakdown')">
+        <div class="action-icon-wrap blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 19.07a10 10 0 0 1 0-14.14M1 12h3m16 0h3M12 1v3m0 16v3"/></svg>
+        </div>
+        <span class="action-label">Vehicle<br>Breakdown</span>
+      </button>
+      <button class="action-card" onclick="startFlow('firstaid')">
+        <div class="action-icon-wrap green">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <span class="action-label">First<br>Aid</span>
+      </button>
+    </div>
+
+    <!-- Witnessed Accident Button -->
+    <button class="witness-btn" onclick="openWitnessFlow()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      I witnessed an accident
+    </button>
+
+    <!-- Helpline Strip -->
+    <div class="helpline-section">
+      <div class="helpline-label">Emergency Helplines</div>
+      <div class="helpline-scroll" id="helplineStrip">
+        <a href="tel:108" class="hl-chip"><span class="hl-num">108</span><span class="hl-name">Ambulance</span></a>
+        <a href="tel:100" class="hl-chip"><span class="hl-num">100</span><span class="hl-name">Police</span></a>
+        <a href="tel:101" class="hl-chip"><span class="hl-num">101</span><span class="hl-name">Fire</span></a>
+        <a href="tel:1033" class="hl-chip"><span class="hl-num">1033</span><span class="hl-name">Highway</span></a>
+        <a href="tel:112" class="hl-chip"><span class="hl-num">112</span><span class="hl-name">Universal</span></a>
+        <a href="tel:1070" class="hl-chip"><span class="hl-num">1070</span><span class="hl-name">Disaster</span></a>
+      </div>
+    </div>
+
+  </div><!-- /v-home -->
+
+  <!-- ═══════════════════════════════════════════
+       VIEW: MAP
+  ═══════════════════════════════════════════ -->
+  <div class="view hidden" id="v-map">
+    <div class="map-header">
+      <div class="map-title-row">
+        <span class="view-title">Live Map</span>
+        <div class="map-filter-row" id="mapFilters">
+          <button class="map-filter active" data-type="hospital" onclick="filterMap('hospital',this)">Hospital</button>
+          <button class="map-filter" data-type="police" onclick="filterMap('police',this)">Police</button>
+          <button class="map-filter" data-type="ambulance" onclick="filterMap('ambulance',this)">Ambulance</button>
+          <button class="map-filter" data-type="vehicle_repair" onclick="filterMap('vehicle_repair',this)">Mechanic</button>
+          <button class="map-filter" data-type="pharmacy" onclick="filterMap('pharmacy',this)">Pharmacy</button>
+          <button class="map-filter" data-type="towing" onclick="filterMap('towing',this)">Towing</button>
+        </div>
+      </div>
+    </div>
+    <div class="map-container" id="mapContainer">
+      <div id="leafletMap"></div>
+    </div>
+    <div class="map-locate-btn">
+      <button onclick="recenterMap()" class="icon-btn-surface">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       VIEW: NEARBY SERVICES
+  ═══════════════════════════════════════════ -->
+  <div class="view hidden" id="v-nearby">
+    <div class="screen-header">
+      <span class="view-title">Nearby Services</span>
+      <button class="header-action" id="nearbyRefreshBtn" onclick="refreshNearby()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+      </button>
+    </div>
+    <div class="service-tabs" id="serviceTabs">
+      <button class="stab active" onclick="switchServiceTab('hospital',this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        Hospital
+      </button>
+      <button class="stab" onclick="switchServiceTab('police',this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Police
+      </button>
+      <button class="stab" onclick="switchServiceTab('ambulance',this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Ambulance
+      </button>
+      <button class="stab" onclick="switchServiceTab('vehicle_repair',this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 19.07a10 10 0 0 1 0-14.14"/></svg>
+        Mechanic
+      </button>
+      <button class="stab" onclick="switchServiceTab('pharmacy',this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        Pharmacy
+      </button>
+      <button class="stab" onclick="switchServiceTab('towing',this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Towing
+      </button>
+      <button class="stab stab-blood" onclick="switchServiceTab('blood_bank',this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+        Blood Bank
+      </button>
+    </div>
+    <!-- Blood type filter — only visible on blood bank tab -->
+    <div class="blood-filter" id="bloodFilter" style="display:none">
+      <span class="blood-filter-label">Filter by blood type:</span>
+      <div class="blood-type-pills" id="bloodTypePills">
+        <button class="bt-pill active" onclick="setBloodFilter(null,this)">All</button>
+        <button class="bt-pill" onclick="setBloodFilter('A+',this)">A+</button>
+        <button class="bt-pill" onclick="setBloodFilter('A-',this)">A-</button>
+        <button class="bt-pill" onclick="setBloodFilter('B+',this)">B+</button>
+        <button class="bt-pill" onclick="setBloodFilter('B-',this)">B-</button>
+        <button class="bt-pill" onclick="setBloodFilter('O+',this)">O+</button>
+        <button class="bt-pill" onclick="setBloodFilter('O-',this)">O-</button>
+        <button class="bt-pill" onclick="setBloodFilter('AB+',this)">AB+</button>
+        <button class="bt-pill" onclick="setBloodFilter('AB-',this)">AB-</button>
+      </div>
+    </div>
+    <div class="service-list" id="serviceList">
+      <div class="loading-state" id="nearbyLoading">
+        <div class="spinner"></div>
+        <span>Finding nearby services…</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       VIEW: AI ASSISTANT
+  ═══════════════════════════════════════════ -->
+  <div class="view hidden" id="v-assist">
+    <div class="screen-header">
+      <span class="view-title">Emergency Assistant</span>
+      <div class="assist-status">
+        <div class="assist-dot"></div>
+        <span>AI Active</span>
+      </div>
+    </div>
+    <div class="chat-area" id="chatArea">
+      <div class="chat-welcome">
+        <div class="chat-avatar-lg">R</div>
+        <h3>RoadSoS Assistant</h3>
+        <p>I can help you find emergency services, guide you through first aid, and assist in any road emergency. Describe your situation or tap a suggestion below.</p>
+        <div class="chat-suggestions">
+          <button onclick="sendText('I was in a road accident')">Road accident</button>
+          <button onclick="sendText('Find nearest hospital')">Find hospital</button>
+          <button onclick="sendText('My car broke down')">Car breakdown</button>
+          <button onclick="sendText('First aid for bleeding')">First aid</button>
+        </div>
+      </div>
+    </div>
+    <div class="chat-input-bar">
+      <button class="chat-icon-btn" onclick="requestLocation()" title="Location">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/></svg>
+      </button>
+      <input class="chat-input" id="msgInput" type="text" placeholder="Describe your emergency…" autocomplete="off" onkeydown="if(event.key==='Enter')sendMessage()">
+      <button class="chat-icon-btn" id="voiceBtn" onclick="toggleVoice()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="9" y1="22" x2="15" y2="22"/></svg>
+      </button>
+      <button class="chat-send" onclick="sendMessage()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       VIEW: PROFILE
+  ═══════════════════════════════════════════ -->
+  <div class="view hidden" id="v-profile">
+    <div class="screen-header">
+      <span class="view-title">Profile & Safety</span>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+        <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+    <div class="profile-scroll">
+
+      <!-- Medical Profile card -->
+      <div class="profile-card" id="medProfileCard">
+        <div class="profile-card-header">
+          <div class="profile-card-icon red">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div>
+            <div class="profile-card-title">Medical Profile</div>
+            <div class="profile-card-sub" id="medProfileSub">Not set — tap to add</div>
+          </div>
+          <button class="profile-edit-btn" onclick="openMedModal()">Edit</button>
+        </div>
+        <div class="med-badges" id="medBadges"></div>
+      </div>
+
+      <!-- Emergency Contacts -->
+      <div class="profile-card">
+        <div class="profile-card-header">
+          <div class="profile-card-icon blue">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <div class="profile-card-title">Emergency Contacts</div>
+            <div class="profile-card-sub">Auto-alerted during SOS</div>
+          </div>
+          <button class="profile-edit-btn" onclick="openMedModal()">Add</button>
+        </div>
+        <div id="emergencyContactPreview"></div>
+      </div>
+
+      <!-- First Responder -->
+      <div class="profile-card">
+        <div class="profile-card-header">
+          <div class="profile-card-icon green">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <div class="profile-card-title">Register as Responder</div>
+            <div class="profile-card-sub">Help others in nearby emergencies</div>
+          </div>
+          <button class="profile-edit-btn" onclick="openResponderModal()">Join</button>
+        </div>
+      </div>
+
+      <!-- Document Vault -->
+      <div class="profile-section-label">Document Vault</div>
+      <div class="profile-card doc-vault-card" id="docVaultCard">
+        <div class="profile-card-header">
+          <div class="profile-card-icon blue">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+          </div>
+          <div>
+            <div class="profile-card-title">Document Vault</div>
+            <div class="profile-card-sub" id="docVaultSub">RC, DL, Insurance — tap to add</div>
+          </div>
+          <button class="profile-edit-btn" onclick="openDocModal()">Edit</button>
+        </div>
+        <div class="doc-badges" id="docBadges"></div>
+        <button class="doc-share-btn" id="docShareBtn" onclick="shareDocVault()" style="display:none">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Share with police / insurance
+        </button>
+      </div>
+
+      <!-- Tools -->
+      <div class="profile-section-label">Tools</div>
+      <div class="profile-menu">
+        <button class="profile-menu-item" onclick="openLogModal()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>Log Accident Report</span>
+          <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <button class="profile-menu-item" onclick="shareWhatsApp()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span>Share Location via WhatsApp</span>
+          <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <button class="profile-menu-item" onclick="copyLocation()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>Copy My Location</span>
+          <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <!-- Crash Detection -->
+      <div class="profile-section-label">Auto Crash Detection</div>
+      <div class="crash-card">
+        <div class="crash-card-left">
+          <span class="crash-dot off" id="crashDot"></span>
+          <div>
+            <div class="crash-card-title">Accelerometer Detection</div>
+            <div class="crash-card-sub" id="crashLabel">Inactive — enable on mobile</div>
+          </div>
+        </div>
+        <button class="toggle-switch" id="crashToggle" onclick="toggleCrashDetection()">
+          <span class="toggle-thumb"></span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       BOTTOM NAVIGATION
+  ═══════════════════════════════════════════ -->
+  <nav class="bottom-nav" id="bottomNav">
+    <button class="nav-tab active" id="nav-home" onclick="showView('home')">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="nav-tab" id="nav-map" onclick="showView('map')">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+      <span>Map</span>
+    </button>
+    <button class="nav-tab" id="nav-nearby" onclick="showView('nearby')">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/></svg>
+      <span>Nearby</span>
+    </button>
+    <button class="nav-tab" id="nav-assist" onclick="showView('assist')">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>Assist</span>
+    </button>
+    <button class="nav-tab" id="nav-profile" onclick="showView('profile')">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Profile</span>
+    </button>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       SOS CONFIRMATION OVERLAY
+  ═══════════════════════════════════════════ -->
+  <div class="overlay-backdrop" id="sosOverlay" style="display:none">
+    <div class="sos-confirm-sheet">
+      <div class="sos-confirm-header">
+        <div class="sos-confirm-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <h2>Confirm Emergency</h2>
+        <p>This will immediately:</p>
+      </div>
+      <div class="sos-action-list">
+        <div class="sos-action-item" id="sai-1">
+          <div class="sai-check" id="chk-1"></div>
+          <span>Call emergency services</span>
+        </div>
+        <div class="sos-action-item" id="sai-2">
+          <div class="sai-check" id="chk-2"></div>
+          <span>Share your live location</span>
+        </div>
+        <div class="sos-action-item" id="sai-3">
+          <div class="sai-check" id="chk-3"></div>
+          <span>Alert emergency contacts</span>
+        </div>
+        <div class="sos-action-item" id="sai-4">
+          <div class="sai-check" id="chk-4"></div>
+          <span>Find nearest hospitals</span>
+        </div>
+      </div>
+      <div class="sos-confirm-footer">
+        <button class="btn-sos-confirm" onclick="confirmSOS()" id="sosConfirmBtn">
+          <span id="sosConfirmLabel">SEND EMERGENCY SOS</span>
+          <span class="sos-countdown-badge" id="sosCountdownBadge" style="display:none"></span>
+        </button>
+        <button class="btn-sos-cancel" onclick="cancelSOS()">Cancel — I'm OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       FLOW PANEL (Accident / Breakdown steps)
+  ═══════════════════════════════════════════ -->
+  <div class="overlay-backdrop" id="flowOverlay" style="display:none" onclick="handleFlowBackdrop(event)">
+    <div class="flow-sheet" id="flowSheet">
+      <div class="sheet-handle"></div>
+      <div class="flow-content" id="flowContent">
+        <!-- JS injects flow steps here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       RESULTS PANEL (slide-up service results)
+  ═══════════════════════════════════════════ -->
+  <div class="overlay-backdrop" id="resultsOverlay" style="display:none" onclick="handleResultsBackdrop(event)">
+    <div class="results-sheet" id="resultsSheet">
+      <div class="sheet-handle"></div>
+      <div class="results-topbar">
+        <div class="results-meta" id="resultsMeta">Finding nearby services…</div>
+        <button class="results-map-btn" onclick="toggleResultsMap()" id="resultsMapBtn">Map</button>
+        <button class="results-close" onclick="closeResults()">✕</button>
+      </div>
+      <div class="results-map-mini" id="resultsMiniMap" style="display:none">
+        <div id="miniLeafletMap"></div>
+      </div>
+      <div class="results-cards" id="resultsCards">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <span>Finding nearby services…</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       FIRST AID OVERLAY (full screen)
+  ═══════════════════════════════════════════ -->
+  <div class="overlay-full" id="firstaidOverlay" style="display:none">
+    <div class="firstaid-header">
+      <button class="back-btn" onclick="closeFirstAid()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span class="firstaid-title" id="firstaidTitle">First Aid</span>
+      <button class="speak-btn" onclick="speakFirstAid()" id="speakBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      </button>
+    </div>
+    <div class="firstaid-body" id="firstaidBody">
+      <!-- JS renders either category grid or step-by-step guide -->
+    </div>
+    <div class="firstaid-footer">
+      <a href="tel:108" class="btn-call-ambulance">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.38a16 16 0 0 0 5.61 5.61l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.06 15a2 2 0 0 1 .94 1.92z"/></svg>
+        Call Ambulance — 108
+      </a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       CRASH DETECTION OVERLAY
+  ═══════════════════════════════════════════ -->
+  <div class="crash-overlay" id="crashOverlay">
+    <div class="crash-modal">
+      <div class="crash-icon">!</div>
+      <h2>Crash Detected</h2>
+      <p>Sudden impact detected. Auto-sending SOS in:</p>
+      <div class="crash-num" id="crashCountdown">5</div>
+      <div class="crash-btns">
+        <button class="btn-ok" onclick="cancelCrashSOS()">I'm OK — Cancel</button>
+        <button class="btn-sos-now" onclick="crashSOSnow()">SOS Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       MODALS
+  ═══════════════════════════════════════════ -->
+
+  <!-- Medical Profile Modal -->
+  <div class="modal-backdrop" id="medModal" style="display:none" onclick="closeMedModal()">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <div class="modal-head">
+        <h3>Medical Profile</h3>
+        <button onclick="closeMedModal()">✕</button>
+      </div>
+      <p class="modal-sub">Shared automatically with paramedics when SOS is triggered.</p>
+      <div class="modal-form">
+        <label>Full Name</label>
+        <input type="text" id="mpName" placeholder="Your full name" autocomplete="name">
+        <label>Blood Type</label>
+        <select id="mpBlood">
+          <option value="">Select blood type</option>
+          <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+          <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+        </select>
+        <label>Allergies</label>
+        <input type="text" id="mpAllergies" placeholder="e.g. Penicillin, Aspirin">
+        <label>Current Medications</label>
+        <input type="text" id="mpMeds" placeholder="e.g. Metformin 500mg">
+        <label>Medical Conditions</label>
+        <input type="text" id="mpConditions" placeholder="e.g. Diabetes, Hypertension">
+        <label>Emergency Contact Name</label>
+        <input type="text" id="mpContactName" placeholder="e.g. Priya Sharma">
+        <label>Emergency Contact Phone</label>
+        <input type="tel" id="mpContactPhone" placeholder="+91 98XXX XXXXX">
+        <button class="btn-primary" onclick="saveMedProfile()">Save Profile</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- First Responder Modal -->
+  <div class="modal-backdrop" id="responderModal" style="display:none" onclick="closeResponderModal()">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <div class="modal-head">
+        <h3>Register as First Responder</h3>
+        <button onclick="closeResponderModal()">✕</button>
+      </div>
+      <p class="modal-sub">You will be alerted for emergencies within 2 km of your location.</p>
+      <div class="modal-form">
+        <label>Your Name</label>
+        <input type="text" id="rName" placeholder="Full name" autocomplete="name">
+        <label>Skill / Role</label>
+        <select id="rSkill">
+          <option>Doctor (MBBS / MD)</option>
+          <option>Nurse / Paramedic</option>
+          <option>Trained First-Aider</option>
+          <option>Emergency Medical Technician</option>
+          <option>Off-duty Police / Fire</option>
+          <option>CPR Certified</option>
+        </select>
+        <label>Phone (optional)</label>
+        <input type="tel" id="rPhone" placeholder="+91 98XXX XXXXX">
+        <button class="btn-primary" onclick="submitResponder()">Register</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accident Log Modal -->
+  <div class="modal-backdrop" id="logModal" style="display:none" onclick="closeLogModal()">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <div class="modal-head">
+        <h3>Log Accident Report</h3>
+        <button onclick="closeLogModal()">✕</button>
+      </div>
+      <div class="modal-form">
+        <label>Time of Accident</label>
+        <input type="datetime-local" id="logTime">
+        <label>Type of Incident</label>
+        <select id="logType">
+          <option>Road Accident</option><option>Vehicle Breakdown</option>
+          <option>Vehicle Fire</option><option>Medical Emergency</option><option>Other</option>
+        </select>
+        <label>Vehicles Involved</label>
+        <input type="number" id="logVehicles" min="1" max="20" value="1">
+        <label>Injuries</label>
+        <select id="logInjuries">
+          <option>None</option><option>Minor</option><option>Serious</option><option>Critical</option>
+        </select>
+        <label>Description (optional)</label>
+        <textarea id="logDesc" rows="3" placeholder="Brief description…"></textarea>
+        <label>Location</label>
+        <input type="text" id="logLoc" readonly placeholder="Location captured automatically">
+        <button class="btn-primary" onclick="submitAccidentLog()">Save Report</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       WITNESS REPORT OVERLAY
+  ═══════════════════════════════════════════ -->
+  <div class="overlay-backdrop" id="witnessOverlay" style="display:none" onclick="handleWitnessBackdrop(event)">
+    <div class="flow-sheet" id="witnessSheet">
+      <div class="sheet-handle"></div>
+      <div class="flow-content" id="witnessContent">
+        <h2 class="flow-title">Report What You Saw</h2>
+        <p class="flow-sub">Your report alerts nearby RoadSoS users and emergency services.</p>
+        <div class="modal-form" style="padding:0">
+          <label>Type of incident</label>
+          <select id="wIncidentType">
+            <option>Road Accident</option>
+            <option>Vehicle Fire</option>
+            <option>Medical Emergency</option>
+            <option>Hazard on Road</option>
+            <option>Other</option>
+          </select>
+          <label>Vehicles involved</label>
+          <select id="wVehicles">
+            <option>1</option><option>2</option><option>3</option><option>4+</option>
+          </select>
+          <label>Injuries visible?</label>
+          <select id="wInjuries">
+            <option>Not sure</option>
+            <option>No visible injuries</option>
+            <option>Minor injuries</option>
+            <option>Serious injuries</option>
+          </select>
+          <label>Additional details (optional)</label>
+          <input type="text" id="wDetails" placeholder="e.g. truck overturned, blocking both lanes">
+        </div>
+        <button class="btn-primary" onclick="submitWitness()" style="margin-top:16px">Submit Report</button>
+        <button class="flow-cancel" onclick="closeWitnessFlow()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       ACTIVE EMERGENCY DASHBOARD
+  ═══════════════════════════════════════════ -->
+  <div class="overlay-full" id="emergencyDashboard" style="display:none">
+    <div class="emg-header">
+      <div class="emg-pulse"></div>
+      <span class="emg-title">Emergency Active</span>
+      <span class="emg-timer-inline" id="emgTimerInline">60:00</span>
+    </div>
+    <div class="emg-body">
+      <!-- Nearest hospital card -->
+      <div class="emg-hospital-card" id="emgHospitalCard">
+        <div class="emg-hospital-label">Nearest Hospital</div>
+        <div class="emg-hospital-name" id="emgHospitalName">Finding…</div>
+        <div class="emg-hospital-dist" id="emgHospitalDist"></div>
+        <div class="emg-hospital-actions">
+          <a class="emg-call-btn" id="emgCallBtn" href="tel:108">Call 108</a>
+          <a class="emg-nav-btn" id="emgNavBtn" href="#" target="_blank" rel="noopener">Navigate</a>
+        </div>
+      </div>
+      <!-- Status checklist -->
+      <div class="emg-status-list">
+        <div class="emg-status-item done" id="emgLocStatus">
+          <div class="emg-status-dot"></div>
+          <span>Location shared with services</span>
+        </div>
+        <div class="emg-status-item" id="emgContactStatus">
+          <div class="emg-status-dot"></div>
+          <span id="emgContactText">Alerting emergency contacts…</span>
+        </div>
+        <div class="emg-status-item" id="emgServicesStatus">
+          <div class="emg-status-dot"></div>
+          <span id="emgServicesText">Finding nearby services…</span>
+        </div>
+      </div>
+      <!-- All found services -->
+      <div class="emg-services-list" id="emgServicesList"></div>
+    </div>
+    <div class="emg-footer">
+      <button class="emg-safe-btn" onclick="imSafe()">I'm Safe — Stop Alert</button>
+      <button class="emg-view-btn" onclick="closeEmergencyDashboard()">View Full Results</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       DOCUMENT VAULT MODAL
+  ═══════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="docModal" style="display:none" onclick="closeDocModal()">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <div class="modal-head">
+        <h3>Document Vault</h3>
+        <button onclick="closeDocModal()">✕</button>
+      </div>
+      <p class="modal-sub">Stored locally on your device. Share instantly with police or insurance during an accident.</p>
+      <div class="modal-form">
+        <label>Vehicle Registration (RC Number)</label>
+        <input type="text" id="dvRC" placeholder="e.g. DL01AB1234" autocomplete="off">
+        <label>Insurance Policy Number</label>
+        <input type="text" id="dvInsurance" placeholder="Policy number">
+        <label>Insurance Expiry Date</label>
+        <input type="date" id="dvInsuranceExp">
+        <label>Driving Licence (DL Number)</label>
+        <input type="text" id="dvDL" placeholder="e.g. DL0120110123456">
+        <label>Vehicle Make &amp; Model</label>
+        <input type="text" id="dvVehicle" placeholder="e.g. Honda City 2022, White">
+        <label>Owner Name</label>
+        <input type="text" id="dvOwner" placeholder="As on RC">
+        <button class="btn-primary" onclick="saveDocVault()">Save to Vault</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>

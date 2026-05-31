@@ -1,0 +1,260 @@
+{
+  "_note": "Pre-seeded emergency services for major cities. Used when Overpass API is unavailable.",
+  "cities": [
+    {
+      "name": "New Delhi", "lat": 28.6139, "lon": 77.2090, "radius_km": 40,
+      "services": {
+        "hospital": [
+          {"name": "AIIMS Trauma Centre", "lat": 28.5672, "lon": 77.2100, "phone": "011-26588500", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "Safdarjung Hospital", "lat": 28.5665, "lon": 77.2060, "phone": "011-26730000", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "Ram Manohar Lohia Hospital", "lat": 28.6258, "lon": 77.2003, "phone": "011-23742000", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "GTB Hospital", "lat": 28.6774, "lon": 77.3043, "phone": "011-22582505", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "LNJP Hospital", "lat": 28.6513, "lon": 77.2340, "phone": "011-23232400", "icon": "🏥", "label": "Hospital / Trauma Centre"}
+        ],
+        "police": [
+          {"name": "Delhi Police Control Room", "lat": 28.6139, "lon": 77.2090, "phone": "100", "icon": "🚔", "label": "Police Station"},
+          {"name": "Connaught Place Police Station", "lat": 28.6315, "lon": 77.2167, "phone": "011-23341128", "icon": "🚔", "label": "Police Station"},
+          {"name": "Sadar Bazaar Police Station", "lat": 28.6571, "lon": 77.1892, "phone": "011-25893888", "icon": "🚔", "label": "Police Station"}
+        ],
+        "ambulance": [
+          {"name": "Delhi Emergency Ambulance (108)", "lat": 28.6139, "lon": 77.2090, "phone": "108", "icon": "🚑", "label": "Ambulance Station"},
+          {"name": "CATS Ambulance Delhi", "lat": 28.6580, "lon": 77.2410, "phone": "1099", "icon": "🚑", "label": "Ambulance Station"}
+        ],
+        "fire_station": [
+          {"name": "Delhi Fire Service HQ", "lat": 28.6563, "lon": 77.2280, "phone": "101", "icon": "🚒", "label": "Fire Station"},
+          {"name": "Connaught Place Fire Station", "lat": 28.6340, "lon": 77.2195, "phone": "011-23314040", "icon": "🚒", "label": "Fire Station"}
+        ],
+        "vehicle_repair": [
+          {"name": "Maruti Authorised Service Centre — Connaught Place", "lat": 28.6300, "lon": 77.2200, "phone": "011-23410000", "icon": "🔧", "label": "Vehicle Rescue / Repair"},
+          {"name": "Delhi Auto Works", "lat": 28.6450, "lon": 77.1950, "phone": "9811000001", "icon": "🔧", "label": "Vehicle Rescue / Repair"}
+        ],
+        "towing": [
+          {"name": "Delhi Traffic Police Crane Service", "lat": 28.6200, "lon": 77.2100, "phone": "011-25842282", "icon": "🚛", "label": "Towing Service", "trauma": false},
+          {"name": "National Highways Helpline", "lat": 28.6400, "lon": 77.2300, "phone": "1033", "icon": "🚛", "label": "Towing Service", "trauma": false}
+        ],
+        "puncture": [
+          {"name": "Karol Bagh Tyre Market", "lat": 28.6525, "lon": 77.1907, "phone": "011-28750001", "icon": "🔩", "label": "Puncture / Tyre Shop", "trauma": false},
+          {"name": "INA Tyre Service Centre", "lat": 28.5771, "lon": 77.2087, "phone": "011-24619001", "icon": "🔩", "label": "Puncture / Tyre Shop", "trauma": false},
+          {"name": "Lajpat Nagar Tyre Works", "lat": 28.5700, "lon": 77.2437, "phone": "011-29832001", "icon": "🔩", "label": "Puncture / Tyre Shop", "trauma": false}
+        ],
+        "showroom": [
+          {"name": "Maruti Suzuki — Connaught Place", "lat": 28.6339, "lon": 77.2195, "phone": "1800-102-1800", "icon": "🚗", "label": "Car Showroom", "trauma": false},
+          {"name": "Hyundai — Janpath", "lat": 28.6257, "lon": 77.2182, "phone": "1800-108-5555", "icon": "🚗", "label": "Car Showroom", "trauma": false},
+          {"name": "Tata Motors — Barakhamba Road", "lat": 28.6305, "lon": 77.2290, "phone": "1800-209-7979", "icon": "🚗", "label": "Car Showroom", "trauma": false}
+        ],
+        "pharmacy": [
+          {"name": "Apollo Pharmacy — Connaught Place", "lat": 28.6320, "lon": 77.2180, "phone": "1860-500-0101", "icon": "💊", "label": "Pharmacy"},
+          {"name": "MedPlus Pharmacy", "lat": 28.6410, "lon": 77.2250, "phone": "040-40101010", "icon": "💊", "label": "Pharmacy"}
+        ]
+      }
+    },
+    {
+      "name": "Mumbai", "lat": 19.0760, "lon": 72.8777, "radius_km": 40,
+      "services": {
+        "hospital": [
+          {"name": "KEM Hospital", "lat": 19.0030, "lon": 72.8407, "phone": "022-24136051", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "JJ Hospital", "lat": 18.9596, "lon": 72.8295, "phone": "022-23735555", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "Nair Hospital", "lat": 18.9637, "lon": 72.8337, "phone": "022-23027444", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "Sion Hospital", "lat": 19.0386, "lon": 72.8619, "phone": "022-24076381", "icon": "🏥", "label": "Hospital / Trauma Centre"}
+        ],
+        "police": [
+          {"name": "Mumbai Police Control Room", "lat": 18.9388, "lon": 72.8354, "phone": "100", "icon": "🚔", "label": "Police Station"},
+          {"name": "Colaba Police Station", "lat": 18.9067, "lon": 72.8147, "phone": "022-22021855", "icon": "🚔", "label": "Police Station"},
+          {"name": "Traffic Police Control", "lat": 19.0760, "lon": 72.8777, "phone": "103", "icon": "🚔", "label": "Police Station"}
+        ],
+        "ambulance": [
+          {"name": "Mumbai Emergency Ambulance (108)", "lat": 19.0760, "lon": 72.8777, "phone": "108", "icon": "🚑", "label": "Ambulance Station"},
+          {"name": "Brihanmumbai Municipal Ambulance", "lat": 18.9388, "lon": 72.8354, "phone": "022-22620264", "icon": "🚑", "label": "Ambulance Station"}
+        ],
+        "fire_station": [
+          {"name": "Mumbai Fire Brigade HQ", "lat": 18.9697, "lon": 72.8311, "phone": "101", "icon": "🚒", "label": "Fire Station"},
+          {"name": "Dadar Fire Station", "lat": 19.0176, "lon": 72.8426, "phone": "022-24146700", "icon": "🚒", "label": "Fire Station"}
+        ],
+        "vehicle_repair": [
+          {"name": "Andheri Auto Garage", "lat": 19.1136, "lon": 72.8697, "phone": "9820000001", "icon": "🔧", "label": "Vehicle Rescue / Repair"},
+          {"name": "Mahindra First Choice — Bandra", "lat": 19.0596, "lon": 72.8347, "phone": "1800-209-6006", "icon": "🔧", "label": "Vehicle Rescue / Repair"}
+        ],
+        "towing": [
+          {"name": "Mumbai Traffic Police Towing", "lat": 19.0760, "lon": 72.8777, "phone": "022-22621855", "icon": "🚛", "label": "Towing Service"},
+          {"name": "Mumbai Road Assist", "lat": 19.0500, "lon": 72.8600, "phone": "9820000002", "icon": "🚛", "label": "Towing Service"}
+        ],
+        "puncture": [
+          {"name": "Dadar Tyre House", "lat": 19.0176, "lon": 72.8426, "phone": "022-24142000", "icon": "🔩", "label": "Puncture / Tyre Shop"},
+          {"name": "Andheri Tyre Centre", "lat": 19.1100, "lon": 72.8680, "phone": "9820111001", "icon": "🔩", "label": "Puncture / Tyre Shop"}
+        ],
+        "showroom": [
+          {"name": "Maruti Suzuki — Worli", "lat": 19.0183, "lon": 72.8156, "phone": "1800-102-1800", "icon": "🚗", "label": "Car Showroom"},
+          {"name": "Honda Cars — Andheri", "lat": 19.1100, "lon": 72.8697, "phone": "1800-113-121", "icon": "🚗", "label": "Car Showroom"}
+        ],
+        "pharmacy": [
+          {"name": "Apollo Pharmacy — Dadar", "lat": 19.0180, "lon": 72.8440, "phone": "1860-500-0101", "icon": "💊", "label": "Pharmacy"},
+          {"name": "MedPlus — Andheri", "lat": 19.1100, "lon": 72.8700, "phone": "040-40101010", "icon": "💊", "label": "Pharmacy"}
+        ]
+      }
+    },
+    {
+      "name": "Chennai", "lat": 13.0827, "lon": 80.2707, "radius_km": 40,
+      "services": {
+        "hospital": [
+          {"name": "Rajiv Gandhi Govt General Hospital", "lat": 13.0827, "lon": 80.2707, "phone": "044-25305000", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "Stanley Medical College Hospital", "lat": 13.1016, "lon": 80.2897, "phone": "044-25281232", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "Kilpauk Medical College Hospital", "lat": 13.0780, "lon": 80.2420, "phone": "044-26422401", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "Apollo Hospital — Greams Road", "lat": 13.0620, "lon": 80.2630, "phone": "044-28293333", "icon": "🏥", "label": "Hospital / Trauma Centre"}
+        ],
+        "police": [
+          {"name": "Chennai City Police Control", "lat": 13.0827, "lon": 80.2707, "phone": "100", "icon": "🚔", "label": "Police Station"},
+          {"name": "Anna Nagar Police Station", "lat": 13.0900, "lon": 80.2100, "phone": "044-26209100", "icon": "🚔", "label": "Police Station"}
+        ],
+        "ambulance": [
+          {"name": "Tamil Nadu Emergency Ambulance (108)", "lat": 13.0827, "lon": 80.2707, "phone": "108", "icon": "🚑", "label": "Ambulance Station"},
+          {"name": "EMRI Green Health Services", "lat": 13.0600, "lon": 80.2500, "phone": "108", "icon": "🚑", "label": "Ambulance Station"}
+        ],
+        "fire_station": [
+          {"name": "Chennai Fire & Rescue Services", "lat": 13.0900, "lon": 80.2780, "phone": "101", "icon": "🚒", "label": "Fire Station"},
+          {"name": "Egmore Fire Station", "lat": 13.0780, "lon": 80.2590, "phone": "044-25353333", "icon": "🚒", "label": "Fire Station"}
+        ],
+        "vehicle_repair": [
+          {"name": "TVS Authorised Service — Anna Nagar", "lat": 13.0850, "lon": 80.2150, "phone": "044-26200100", "icon": "🔧", "label": "Vehicle Rescue / Repair"},
+          {"name": "Maruti Service Centre — Adyar", "lat": 13.0063, "lon": 80.2566, "phone": "044-24413000", "icon": "🔧", "label": "Vehicle Rescue / Repair"}
+        ],
+        "towing": [
+          {"name": "Chennai Traffic Police Crane", "lat": 13.0827, "lon": 80.2707, "phone": "044-23452345", "icon": "🚛", "label": "Towing Service"},
+          {"name": "Chennai Road Rescue", "lat": 13.0700, "lon": 80.2600, "phone": "9444000001", "icon": "🚛", "label": "Towing Service"}
+        ],
+        "puncture": [
+          {"name": "T. Nagar Tyre Works", "lat": 13.0418, "lon": 80.2341, "phone": "044-24323000", "icon": "🔩", "label": "Puncture / Tyre Shop"},
+          {"name": "Anna Nagar Tyre Centre", "lat": 13.0900, "lon": 80.2100, "phone": "9444111001", "icon": "🔩", "label": "Puncture / Tyre Shop"}
+        ],
+        "showroom": [
+          {"name": "TVS Motor Showroom — Anna Nagar", "lat": 13.0850, "lon": 80.2150, "phone": "044-26200200", "icon": "🚗", "label": "Car Showroom"},
+          {"name": "Maruti Suzuki — T. Nagar", "lat": 13.0400, "lon": 80.2350, "phone": "1800-102-1800", "icon": "🚗", "label": "Car Showroom"}
+        ],
+        "pharmacy": [
+          {"name": "Apollo Pharmacy — Anna Nagar", "lat": 13.0900, "lon": 80.2100, "phone": "1860-500-0101", "icon": "💊", "label": "Pharmacy"},
+          {"name": "Medplus — T. Nagar", "lat": 13.0418, "lon": 80.2341, "phone": "040-40101010", "icon": "💊", "label": "Pharmacy"}
+        ]
+      }
+    },
+    {
+      "name": "Bangalore", "lat": 12.9716, "lon": 77.5946, "radius_km": 40,
+      "services": {
+        "hospital": [
+          {"name": "Bowring & Lady Curzon Hospital", "lat": 12.9766, "lon": 77.6050, "phone": "080-25460440", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "Victoria Hospital", "lat": 12.9598, "lon": 77.5713, "phone": "080-26703101", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "Nimhans Trauma Centre", "lat": 12.9343, "lon": 77.5959, "phone": "080-46110007", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "Manipal Hospital — Old Airport Road", "lat": 12.9597, "lon": 77.6491, "phone": "080-25023333", "icon": "🏥", "label": "Hospital / Trauma Centre"}
+        ],
+        "police": [
+          {"name": "Bengaluru City Police Control", "lat": 12.9716, "lon": 77.5946, "phone": "100", "icon": "🚔", "label": "Police Station"},
+          {"name": "MG Road Police Station", "lat": 12.9756, "lon": 77.6094, "phone": "080-22942222", "icon": "🚔", "label": "Police Station"}
+        ],
+        "ambulance": [
+          {"name": "Karnataka Emergency Ambulance (108)", "lat": 12.9716, "lon": 77.5946, "phone": "108", "icon": "🚑", "label": "Ambulance Station"},
+          {"name": "EMRI Bangalore", "lat": 12.9600, "lon": 77.5800, "phone": "108", "icon": "🚑", "label": "Ambulance Station"}
+        ],
+        "fire_station": [
+          {"name": "Bangalore Fire & Emergency Services", "lat": 12.9740, "lon": 77.5990, "phone": "101", "icon": "🚒", "label": "Fire Station"},
+          {"name": "Indiranagar Fire Station", "lat": 12.9784, "lon": 77.6408, "phone": "080-25222222", "icon": "🚒", "label": "Fire Station"}
+        ],
+        "vehicle_repair": [
+          {"name": "Maruti Suzuki Service — Indiranagar", "lat": 12.9784, "lon": 77.6408, "phone": "1800-102-1800", "icon": "🔧", "label": "Vehicle Rescue / Repair"},
+          {"name": "TATA Authorised Workshop — Koramangala", "lat": 12.9352, "lon": 77.6245, "phone": "1800-209-7979", "icon": "🔧", "label": "Vehicle Rescue / Repair"}
+        ],
+        "towing": [
+          {"name": "Bengaluru Traffic Police Crane", "lat": 12.9716, "lon": 77.5946, "phone": "080-22943390", "icon": "🚛", "label": "Towing Service"},
+          {"name": "Bangalore Road Assist", "lat": 12.9600, "lon": 77.6000, "phone": "9880000001", "icon": "🚛", "label": "Towing Service"}
+        ],
+        "puncture": [
+          {"name": "Indiranagar Tyre House", "lat": 12.9784, "lon": 77.6408, "phone": "080-25232000", "icon": "🔩", "label": "Puncture / Tyre Shop"},
+          {"name": "Koramangala Tyre Works", "lat": 12.9352, "lon": 77.6245, "phone": "9880111001", "icon": "🔩", "label": "Puncture / Tyre Shop"}
+        ],
+        "showroom": [
+          {"name": "Maruti Suzuki — MG Road", "lat": 12.9757, "lon": 77.6101, "phone": "1800-102-1800", "icon": "🚗", "label": "Car Showroom"},
+          {"name": "Toyota Kirloskar — Indiranagar", "lat": 12.9784, "lon": 77.6408, "phone": "1800-425-0001", "icon": "🚗", "label": "Car Showroom"}
+        ],
+        "pharmacy": [
+          {"name": "Apollo Pharmacy — Indiranagar", "lat": 12.9784, "lon": 77.6408, "phone": "1860-500-0101", "icon": "💊", "label": "Pharmacy"},
+          {"name": "MedPlus — Koramangala", "lat": 12.9352, "lon": 77.6245, "phone": "040-40101010", "icon": "💊", "label": "Pharmacy"}
+        ]
+      }
+    },
+    {
+      "name": "Hyderabad", "lat": 17.3850, "lon": 78.4867, "radius_km": 40,
+      "services": {
+        "hospital": [
+          {"name": "Osmania General Hospital", "lat": 17.3680, "lon": 78.4860, "phone": "040-24600354", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "Nizam's Institute of Medical Sciences", "lat": 17.3910, "lon": 78.4574, "phone": "040-23489000", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "Gandhi Hospital", "lat": 17.4340, "lon": 78.4784, "phone": "040-27505566", "icon": "🏥", "label": "Hospital / Trauma Centre"}
+        ],
+        "police": [
+          {"name": "Hyderabad Police Control Room", "lat": 17.3850, "lon": 78.4867, "phone": "100", "icon": "🚔", "label": "Police Station"},
+          {"name": "Begumpet Police Station", "lat": 17.4432, "lon": 78.4624, "phone": "040-27903566", "icon": "🚔", "label": "Police Station"}
+        ],
+        "ambulance": [
+          {"name": "Telangana Emergency Ambulance (108)", "lat": 17.3850, "lon": 78.4867, "phone": "108", "icon": "🚑", "label": "Ambulance Station"},
+          {"name": "GVK EMRI Hyderabad", "lat": 17.3700, "lon": 78.4700, "phone": "108", "icon": "🚑", "label": "Ambulance Station"}
+        ],
+        "fire_station": [
+          {"name": "Hyderabad Fire & Emergency Services", "lat": 17.3990, "lon": 78.4850, "phone": "101", "icon": "🚒", "label": "Fire Station"}
+        ],
+        "vehicle_repair": [
+          {"name": "Hyundai Authorised Service — Banjara Hills", "lat": 17.4156, "lon": 78.4347, "phone": "040-23547890", "icon": "🔧", "label": "Vehicle Rescue / Repair"}
+        ],
+        "towing": [
+          {"name": "Hyderabad Traffic Police Towing", "lat": 17.3850, "lon": 78.4867, "phone": "040-27852485", "icon": "🚛", "label": "Towing Service"}
+        ],
+        "puncture": [
+          {"name": "Banjara Hills Tyre Centre", "lat": 17.4156, "lon": 78.4347, "phone": "040-23540000", "icon": "🔩", "label": "Puncture / Tyre Shop"},
+          {"name": "Secunderabad Tyre Works", "lat": 17.4340, "lon": 78.5013, "phone": "9848111001", "icon": "🔩", "label": "Puncture / Tyre Shop"}
+        ],
+        "showroom": [
+          {"name": "Maruti Suzuki — Banjara Hills", "lat": 17.4200, "lon": 78.4400, "phone": "1800-102-1800", "icon": "🚗", "label": "Car Showroom"},
+          {"name": "Hyundai Showroom — Begumpet", "lat": 17.4432, "lon": 78.4624, "phone": "1800-108-5555", "icon": "🚗", "label": "Car Showroom"}
+        ],
+        "pharmacy": [
+          {"name": "Apollo Pharmacy — Banjara Hills", "lat": 17.4156, "lon": 78.4347, "phone": "1860-500-0101", "icon": "💊", "label": "Pharmacy"}
+        ]
+      }
+    },
+    {
+      "name": "Kolkata", "lat": 22.5726, "lon": 88.3639, "radius_km": 40,
+      "services": {
+        "hospital": [
+          {"name": "SSKM (PG) Hospital", "lat": 22.5392, "lon": 88.3378, "phone": "033-22041601", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "NRS Medical College Hospital", "lat": 22.5560, "lon": 88.3624, "phone": "033-22654334", "icon": "🏥", "label": "Hospital / Trauma Centre"},
+          {"name": "Calcutta Medical College", "lat": 22.5768, "lon": 88.3561, "phone": "033-22410870", "icon": "🏥", "label": "Hospital / Trauma Centre"}
+        ],
+        "police": [
+          {"name": "Kolkata Police Control Room", "lat": 22.5726, "lon": 88.3639, "phone": "100", "icon": "🚔", "label": "Police Station"},
+          {"name": "Lalbazar Police HQ", "lat": 22.5726, "lon": 88.3639, "phone": "033-22143200", "icon": "🚔", "label": "Police Station"}
+        ],
+        "ambulance": [
+          {"name": "West Bengal Emergency Ambulance (108)", "lat": 22.5726, "lon": 88.3639, "phone": "108", "icon": "🚑", "label": "Ambulance Station"},
+          {"name": "Kolkata Municipal Ambulance", "lat": 22.5600, "lon": 88.3500, "phone": "1800-345-0000", "icon": "🚑", "label": "Ambulance Station"}
+        ],
+        "fire_station": [
+          {"name": "Kolkata Fire Service HQ", "lat": 22.5593, "lon": 88.3563, "phone": "101", "icon": "🚒", "label": "Fire Station"}
+        ],
+        "vehicle_repair": [
+          {"name": "Tata Motors Service — Park Street", "lat": 22.5517, "lon": 88.3553, "phone": "033-22298000", "icon": "🔧", "label": "Vehicle Rescue / Repair"}
+        ],
+        "towing": [
+          {"name": "Kolkata Traffic Police Towing", "lat": 22.5726, "lon": 88.3639, "phone": "033-22143200", "icon": "🚛", "label": "Towing Service"},
+          {"name": "Kolkata Road Assist", "lat": 22.5600, "lon": 88.3600, "phone": "9830000002", "icon": "🚛", "label": "Towing Service"}
+        ],
+        "puncture": [
+          {"name": "Park Street Tyre Works", "lat": 22.5517, "lon": 88.3553, "phone": "033-22280000", "icon": "🔩", "label": "Puncture / Tyre Shop"},
+          {"name": "Esplanade Tyre Centre", "lat": 22.5640, "lon": 88.3522, "phone": "9830111001", "icon": "🔩", "label": "Puncture / Tyre Shop"}
+        ],
+        "showroom": [
+          {"name": "Maruti Suzuki — Park Street", "lat": 22.5520, "lon": 88.3560, "phone": "1800-102-1800", "icon": "🚗", "label": "Car Showroom"},
+          {"name": "Tata Motors — Salt Lake", "lat": 22.5805, "lon": 88.4089, "phone": "1800-209-7979", "icon": "🚗", "label": "Car Showroom"}
+        ],
+        "pharmacy": [
+          {"name": "Apollo Pharmacy — Park Street", "lat": 22.5517, "lon": 88.3553, "phone": "1860-500-0101", "icon": "💊", "label": "Pharmacy"},
+          {"name": "MedPlus — Gariahat", "lat": 22.5200, "lon": 88.3670, "phone": "040-40101010", "icon": "💊", "label": "Pharmacy"}
+        ]
+      }
+    }
+  ]
+}

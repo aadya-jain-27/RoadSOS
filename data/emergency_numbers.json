@@ -1,0 +1,60 @@
+{
+  "IN": {
+    "police": "100",
+    "ambulance": "108",
+    "fire": "101",
+    "disaster": "1070",
+    "women": "1091",
+    "highway": "1033",
+    "child": "1098"
+  },
+  "US": {
+    "police": "911",
+    "ambulance": "911",
+    "fire": "911",
+    "coast_guard": "911"
+  },
+  "UK": {
+    "police": "999",
+    "ambulance": "999",
+    "fire": "999",
+    "non_emergency": "101"
+  },
+  "AU": {
+    "police": "000",
+    "ambulance": "000",
+    "fire": "000",
+    "highway": "13 11 70"
+  },
+  "CA": {
+    "police": "911",
+    "ambulance": "911",
+    "fire": "911"
+  },
+  "DE": {
+    "police": "110",
+    "ambulance": "112",
+    "fire": "112"
+  },
+  "FR": {
+    "police": "17",
+    "ambulance": "15",
+    "fire": "18",
+    "european": "112"
+  },
+  "SG": {
+    "police": "999",
+    "ambulance": "995",
+    "fire": "995"
+  },
+  "AE": {
+    "police": "999",
+    "ambulance": "998",
+    "fire": "997"
+  },
+  "DEFAULT": {
+    "police": "112",
+    "ambulance": "112",
+    "fire": "112"
+  }
+}

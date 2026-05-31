@@ -1,0 +1,19 @@
+{
+  "name": "RoadSoS — Emergency Road Assistant",
+  "short_name": "RoadSoS",
+  "description": "AI-powered emergency road assistance — hospitals, ambulance, police, towing, instantly.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0f18",
+  "theme_color": "#e74c3c",
+  "orientation": "any",
+  "icons": [
+    { "src": "/static/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/static/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "categories": ["health", "navigation", "utilities"],
+  "shortcuts": [
+    { "name": "SOS Emergency", "url": "/?sos=1", "description": "Trigger SOS immediately" },
+    { "name": "Find Hospital", "url": "/?q=hospital", "description": "Find nearest hospital" }
+  ]
+}
