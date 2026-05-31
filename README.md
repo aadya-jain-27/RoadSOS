@@ -1,30 +1,10 @@
 # RoadSoS — Emergency Road Assistance Platform
-### Road Safety Hackathon 2026 | CoERS, IIT Madras | Problem Statement 1.3
 
 ---
 
 ## What it does
 
 RoadSoS is a web-based conversational assistant that helps accident victims and bystanders instantly find the nearest emergency services — hospitals, ambulance stations, police stations, vehicle rescue, and pharmacies — along with country-specific emergency helpline numbers and first aid guidance.
-
-## Quick Start
-
-### Requirements
-- Python 3.8+
-- Internet connection (for live OSM data; offline mode available)
-
-### Run (Windows)
-```
-Double-click run.bat
-```
-
-### Run (manual)
-```bash
-pip install -r requirements.txt
-python app.py
-```
-
-Then open: **http://localhost:5000**
 
 ---
 
